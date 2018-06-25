@@ -11,7 +11,7 @@ print sys.stdin.encoding
 import logging
 import subprocess
 import sqlite3
-from multiprocessing import Pool
+from multiprocessing.dummy import Pool
 from json import  *
 reload(sys)
 sys.setdefaultencoding("utf-8") 
@@ -554,14 +554,16 @@ def getdayreward(device=''):
 		click(530,200,0.5,device)
 		click(370,990,0.5,device)
 		slide(600 ,200 ,200, 200 ,1000,device)
-def snap(device=''):
+def snap(device='',bexit=1):
 	print device
 
 	timestr=time.strftime('%Y-%m-%d-%H_%M_%S',time.localtime(time.time()))
-	os.system('Adb %s shell /system/bin/screencap -p /sdcard/screenshot.png'%(' -s '+device if device <> '' else ''))
+	os.system('Adb %s shell /system/bin/screencap -p /sdcard/screenshot.png'%(' -s '+ device if device <> '' else ''))
 	sleep(1)
-	dst="C:\\snap\\%s.png"%timestr
-	os.system('Adb %s pull /sdcard/screenshot.png C:\\snap\\%s.png'%((' -s '+device if device <> '' else ''),timestr))
+	dst="%s.png"%timestr
+	os.system('Adb %s pull /sdcard/screenshot.png %s'%((' -s '+ device if device <> '' else ''),dst))
+	if bexit :
+		exit()
 	return dst
 def isBig(device='',l=[]):
 	# if os.popen('adb %s shell wm size'%(('-s %s')%device if device <> '' else '')).readlines()[0].find('1080x1920') <> -1:
@@ -868,7 +870,7 @@ def alliancework(device):
 	click(525,135,0,device)
 	click(375,1220,0,device)
 
-def multido(func,devices):
+def multido1(func,devices):
 	pool=threadpool.ThreadPool(len(devices))
 	reqs=threadpool.makeRequests(lambda x:func(x),devices)
 	[pool.putRequest(req) for req in reqs]
@@ -938,16 +940,16 @@ def dragontower(device=''):
 
 	for i in range(1,20):
 		print i
-		click(800, 600)
+		click(800, 600,0,device)
 		
 		#click(1000, 530,8)
-		click(990, 600,8)
+		click(990, 600,8,device)
 		
 		if i%3==0:
-			click(560, 1325,3)
-			click(560, 1325,1)
+			click(560, 1325,3,device)
+			click(560, 1325,1,device)
 		else:
-			click(560, 1325,1)
+			click(560, 1325,1,device)
 	exit()
 def repeat(func,cnt):
 	for i in xrange(cnt):
@@ -1083,8 +1085,9 @@ def sds():
 
 
 from PIL import Image
-def VerifyPic(image_path="C:\\snap\\2018-06-07-15_55_05.png"):
+def VerifyPic(image_path="2018-06-07-15_55_05.png"):
     i=0
+
     image = Image.open(image_path)
     print image.getpixel((288,1412))
     print image.getpixel((803,1407))
@@ -1104,7 +1107,7 @@ def douniformjob(device=''):
 		click(288,1412,1,device)
 	else:
 		click(560,1210,1,device)	
-	
+
 
 if __name__ == '__main__': 
 	rednote='BIIN75BAJNHUNBTO'  
@@ -1116,19 +1119,21 @@ if __name__ == '__main__':
 
 	#s=[1,2,3,4,5]
 	#print s[-1]
-	for i in xrange(6):
-		douniformjob()
 
-	exit()
-	snap()
 	#getgoldfrom_taobao()
 	#
-
-	
-	multido(getVIP,[{4:400}])
+	# slide(280,680,440,830,100,'127.0.0.1:62026')
+	# slide(440,830,440,830,500,'127.0.0.1:62026')
+	# slide(440,830,440,985,100,'127.0.0.1:62026')
+	# exit()
+	#snap('127.0.0.1:62026')
+	#getVIP(mi6,{4:400})
+	#multido(getVIP,[{4:400}])
+	snap(mi6)
+	exit(0)
 
 	#multido(callnames)
-	#print getdevices()
+	#print ge  tdevices()
 	#multido(wechat,[])
 
 	# pool=Pool(5)
@@ -1146,11 +1151,11 @@ if __name__ == '__main__':
 	#longyunshi()
 	#wechat()
 	#attackmonster()
-	#snap()
+	snap()
 	
 	#repeat(upgradefarm,5)
 	
-	#dragontower()
+	#dragontower("1f33ee18")
 	#repeat(iron, 5)
 
 	#usegoods(72)
