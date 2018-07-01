@@ -938,7 +938,7 @@ def getVIP(device='',levelcnt={0:0}):
 ##17
 def dragontower(device=''):
 
-	for i in range(1,20):
+	for i in range(1,10):
 		print i
 		click(800, 600,0,device)
 		
@@ -947,9 +947,9 @@ def dragontower(device=''):
 		
 		if i%3==0:
 			click(560, 1325,3,device)
-			click(560, 1325,1,device)
+			click(560, 1325,3,device)
 		else:
-			click(560, 1325,1,device)
+			click(560, 1325,3,device)
 	exit()
 def repeat(func,cnt):
 	for i in xrange(cnt):
@@ -1100,7 +1100,7 @@ def VerifyPic(image_path="2018-06-07-15_55_05.png"):
     return i
 
 def douniformjob(device=''):
-	ret=VerifyPic(snap(device))
+	ret=VerifyPic(snap(device,0))
 	if ret == 3 or ret == 1:
 		click(803,1407,1,device)
 	elif ret == 2:
@@ -1128,10 +1128,12 @@ if __name__ == '__main__':
 	# exit()
 	#snap('127.0.0.1:62026')
 	#getVIP(mi6,{4:400})
+	dragontower("127.0.0.1:62029")
 	#multido(getVIP,[{4:400}])
-	snap(mi6)
 	exit(0)
 
+	for i in xrange(13):
+		douniformjob("127.0.0.1:62028")
 	#multido(callnames)
 	#print ge  tdevices()
 	#multido(wechat,[])
@@ -1151,11 +1153,11 @@ if __name__ == '__main__':
 	#longyunshi()
 	#wechat()
 	#attackmonster()
-	snap()
+	#snap()
 	
 	#repeat(upgradefarm,5)
 	
-	#dragontower("1f33ee18")
+	#dragontower("127.0.0.1:62028")
 	#repeat(iron, 5)
 
 	#usegoods(72)
